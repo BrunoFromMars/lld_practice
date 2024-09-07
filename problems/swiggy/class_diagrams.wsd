@@ -1,0 +1,39 @@
+@startuml swiggy
+class Restaurant {
+  String res_id
+
+}
+
+OrderMgr *-- DeliveryMgr
+OrderMgr *-- FoodMgr
+
+
+class OrderMgr {
+  - Map<string, Order*> ordersMap
+  - DeliveryMgr* deliveryMgr
+  - FoodMgr* foodMgr
+  - {static} OrderMgr* orderMgrInstance
+  - {static} Mutex mtx
+  - OrderMgr()
+  - manageDelivery(string OrderId)
+
+}
+
+class DeliveryMgr {
+  - {static} DeliveryMgr* deliveryMgrInstance
+  - {static} Mutex mtx
+  - DeliveryMgr()
+  - manageDelivery(string OrderId, DeliveryMetadata deliveryMetadata)
+  + getDeliveryMgr() : DeliveryMgr*
+}
+
+class FoodMgr {
+  - {static} FoodMgr* foodMgrInstance
+  - {static} Mutex mtx
+  - FoodMgr()
+  - manageDelivery(string OrderId, DeliveryMetadata deliveryMetadata)
+  + getDeliveryMgr() : FoodMgr*
+
+}
+
+@enduml
